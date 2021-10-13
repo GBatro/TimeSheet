@@ -3,22 +3,16 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class TimeTracking {
+	//An array to hold all of the timeslots for the week
 	public static TimeSlot[] timeList = new TimeSlot[20];
 
 	public static void main(String[] args) {
 		takeInput();
-
-		for(int x = 0; x < timeList.length; x++) {
-			try {
-				timeList[x].print();
-			}
-			catch(NullPointerException e) {
-				return;
-			}
-		}
+		printByDay();
+		System.out.println("\n" + timeTotal());
 	}
 	
-	//round to nearest hundredth
+	//Round a double to the nearest hundredth
 	public static double roundHundredth(double num) {
 		return (double)(Math.round(num * 100)) / 100;
 	}
@@ -40,7 +34,7 @@ public class TimeTracking {
 		return (hours + ":" + minutes);
 	}
 	
-	//take time input from a file "timeFile.txt"
+	//Take time input from a file "timeFile.txt"
 	public static void takeInput() {
 		TimeSlot tempTimeSlot;
 		String day, temp;
@@ -86,5 +80,61 @@ public class TimeTracking {
 		}	
 	}
 
+	//Print off every time slot with all of the information per slot
+	public static void printDetail() {
+		for(int x = 0; x < timeList.length && timeList[x] != null; x++) {
+			timeList[x].print();
+		}
+	}
+
+	//Get the total time for the week
+	public static double timeTotal() {
+		double total = 0;
+
+		for(int x = 0; x < timeList.length && timeList[x] != null; x++) {
+			if(timeList[x].time() > 0) {
+				total += timeList[x].time();
+			}
+		}
+
+		return total;
+	}
+
+	//Get the total of each weekday and print them out
+	public static void printByDay() {
+		double mon = 0, tue = 0, wed = 0, thu = 0, fri = 0, sat = 0, sun = 0;
+
+		for(int x = 0; x < timeList.length && timeList[x] != null; x++) {
+			if(timeList[x].time() > 0) {
+				switch (timeList[x].getDay()) {
+					case "Monday":		mon += timeList[x].time();
+										break;
+					case "Tuesday":		tue += timeList[x].time();
+										break;
+					case "Wednesday":	wed += timeList[x].time();
+										break;
+					case "Thursday":	thu += timeList[x].time();
+										break;
+					case "Friday":		fri += timeList[x].time();
+										break;
+					case "Saturday":	sat += timeList[x].time();
+										break;
+					case "Sunday":		sun += timeList[x].time();
+										break;
+					default:			System.out.println("Invalid day found.");
+										break;
+				}
+			}
+		}
+
+		System.out.println(
+			"Sunday: " + roundHundredth(sun) 
+			+ "\nMonday: " + roundHundredth(mon) 
+			+ "\nTuesday: " + roundHundredth(tue) 
+			+ "\nWednesday: " + roundHundredth(wed) 
+			+ "\nThursday: " + roundHundredth(thu) 
+			+ "\nFriday: " + roundHundredth(fri) 
+			+ "\nSaturday: " + roundHundredth(sat));
+	}
 }
 

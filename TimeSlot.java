@@ -1,8 +1,8 @@
 public class TimeSlot {
 
-	String day;
-	double start;
-	double end;
+	private String day;
+	private double start;
+	private double end;
 
 	public TimeSlot() {
 		day = null;
