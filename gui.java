@@ -1,5 +1,7 @@
-//Usually you will require both swing and awt packages
-// even if you are working with just swings.
+//TODO: Turn template into something usable 
+
+
+
 import javax.swing.*;
 import java.awt.*;
 class gui {
